@@ -4,7 +4,10 @@
   "description": "the solidity smart contracts of ICO",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rimraf artifacts && rimraf cache && rimraf deployments/localhost && rimraf src/types/*",
+    "build": "hardhat compile && tsc",
+    "test": "hardhat test",
+    "deploy:goerli": "hardhat deploy --network goerli --export export/abi/goerli.json"
   },
   "repository": {
     "type": "git",

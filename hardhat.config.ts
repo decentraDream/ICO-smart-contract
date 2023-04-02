@@ -1,6 +1,7 @@
 import { HardhatUserConfig } from "hardhat/config";
 import { HttpNetworkUserConfig } from "hardhat/types";
 import "@nomicfoundation/hardhat-toolbox";
+import "hardhat-deploy"
 
 
 const infuraNetwork = (
@@ -38,12 +39,18 @@ const config: HardhatUserConfig = {
 			1, 
 			6283185,
 		),
-		goerli: infuraNetwork(
-			process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [], 
-			"goerli", 
-			5, 
-			6283185
-		)
+		// goerli: infuraNetwork(
+		// 	process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [], 
+		// 	"goerli", 
+		// 	5, 
+		// 	6283185
+		// )
+		goerli: {
+            url: "https://rpc.ankr.com/eth_goerli",
+            chainId: 5,
+            gas: 6283185,
+			accounts: process.env.PRIVATE_KEY !== undefined ? [`0x${process.env.PRIVATE_KEY}`] : []
+        }
 	},
   paths: {
     artifacts: "artifacts",

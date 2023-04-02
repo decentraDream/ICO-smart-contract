@@ -1,0 +1,52 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+require("@nomicfoundation/hardhat-toolbox");
+const infuraNetwork = (accounts, network, chainId, gas) => {
+    return {
+        url: `https://${network}.infura.io/v3/${process.env.PROJECT_ID}`,
+        chainId,
+        gas,
+        accounts,
+        gasPrice: 200000000000,
+    };
+};
+const config = {
+    solidity: {
+        compilers: [
+            {
+                version: "0.8.9",
+                settings: {
+                    optimizer: {
+                        enabled: true
+                    },
+                },
+            }
+        ],
+    },
+    networks: {
+        mainnet: infuraNetwork(process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [], "mainnet", 1, 6283185),
+        goerli: infuraNetwork(process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [], "goerli", 5, 6283185)
+    },
+    paths: {
+        artifacts: "artifacts",
+        deploy: "deploy",
+        deployments: "deployments",
+    },
+    typechain: {
+        outDir: "src/types",
+        target: "ethers-v5",
+    },
+    namedAccounts: {
+        deployer: {
+            default: 0,
+        },
+    },
+    gasReporter: {
+        enabled: true,
+        currency: "USD",
+    },
+    etherscan: {
+        apiKey: process.env.ETHERSCAN_API_KEY,
+    },
+};
+exports.default = config;
